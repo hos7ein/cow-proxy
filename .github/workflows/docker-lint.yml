@@ -13,12 +13,15 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  job1:
-    name: docker-lint
+  linter:
     runs-on: ubuntu-latest
     steps:
-    # Important: This sets up your GITHUB_WORKSPACE environment variable
-    - uses: actions/checkout@v2
 
-    - name: Docker lint
-      run: docker run --rm -i -v .hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint < Dockerfile
+      - uses: actions/checkout@v2
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: "Dockerfile"
+          ignore: "./.hadolint.yaml"
+
